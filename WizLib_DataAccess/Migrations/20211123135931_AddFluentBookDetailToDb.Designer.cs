@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WizLib_DataAccess.Data;
 
 namespace WizLib_DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211123135931_AddFluentBookDetailToDb")]
+    partial class AddFluentBookDetailToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,75 +118,6 @@ namespace WizLib_DataAccess.Migrations
                     b.ToTable("BookDetails");
                 });
 
-            modelBuilder.Entity("WizLib_Model.Models.Category", b =>
-                {
-                    b.Property<int>("Category_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("CategoryName");
-
-                    b.HasKey("Category_Id");
-
-                    b.ToTable("tb_Category");
-                });
-
-            modelBuilder.Entity("WizLib_Model.Models.Fluent_Author", b =>
-                {
-                    b.Property<int>("Author_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Author_Id");
-
-                    b.ToTable("Fluent_Author");
-                });
-
-            modelBuilder.Entity("WizLib_Model.Models.Fluent_Book", b =>
-                {
-                    b.Property<int>("Book_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BookDetail_Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ISBN")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Book_Id");
-
-                    b.HasIndex("BookDetail_Id")
-                        .IsUnique();
-
-                    b.ToTable("Fluent_Books");
-                });
-
             modelBuilder.Entity("WizLib_Model.Models.Fluent_BookDetail", b =>
                 {
                     b.Property<int>("BookDetail_Id")
@@ -204,26 +137,6 @@ namespace WizLib_DataAccess.Migrations
                     b.HasKey("BookDetail_Id");
 
                     b.ToTable("Fluent_BookDetails");
-                });
-
-            modelBuilder.Entity("WizLib_Model.Models.Fluent_Publisher", b =>
-                {
-                    b.Property<int>("Publisher_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Publisher_Id");
-
-                    b.ToTable("Fluent_Publisher");
                 });
 
             modelBuilder.Entity("WizLib_Model.Models.Genre", b =>
@@ -300,17 +213,6 @@ namespace WizLib_DataAccess.Migrations
                     b.Navigation("Book");
                 });
 
-            modelBuilder.Entity("WizLib_Model.Models.Fluent_Book", b =>
-                {
-                    b.HasOne("WizLib_Model.Models.Fluent_BookDetail", "Fluent_BookDetail")
-                        .WithOne("Fluent_Book")
-                        .HasForeignKey("WizLib_Model.Models.Fluent_Book", "BookDetail_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Fluent_BookDetail");
-                });
-
             modelBuilder.Entity("WizLib_Model.Models.Author", b =>
                 {
                     b.Navigation("BookAuthors");
@@ -324,11 +226,6 @@ namespace WizLib_DataAccess.Migrations
             modelBuilder.Entity("WizLib_Model.Models.BookDetail", b =>
                 {
                     b.Navigation("Book");
-                });
-
-            modelBuilder.Entity("WizLib_Model.Models.Fluent_BookDetail", b =>
-                {
-                    b.Navigation("Fluent_Book");
                 });
 
             modelBuilder.Entity("WizLib_Model.Models.Publisher", b =>

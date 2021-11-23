@@ -7,14 +7,10 @@ using System.Threading.Tasks;
 
 namespace WizLib_Model.Models
 {
-    public class Fluent_Publisher
+    public class Category
     {
-        public int Publisher_Id { get; set; }
-       
+        [Key]
+        public int Category_Id { get; set; }
         public string Name { get; set; }
-       
-        public string Location { get; set; }
-      
-
     }
 }
