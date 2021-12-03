@@ -23,6 +23,10 @@ namespace WizLib.Controllers
         public IActionResult Index()
         {
             List<Book> objList = _db.Books.ToList();
+            foreach(var obj in objList)
+            {
+                obj.Publisher = _db.Publishers.FirstOrDefault(u => u.Publisher_Id == obj.Publisher_Id);
+            }
             return View(objList);
         }
 
